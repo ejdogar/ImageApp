@@ -13,6 +13,7 @@
 		BCA064292B60334100BDFE68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCA064272B60334100BDFE68 /* Main.storyboard */; };
 		BCA0642B2B60334400BDFE68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA0642A2B60334400BDFE68 /* Assets.xcassets */; };
 		BCA0642E2B60334400BDFE68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCA0642C2B60334400BDFE68 /* LaunchScreen.storyboard */; };
+		BCA064362B60356400BDFE68 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA064352B60356400BDFE68 /* UploadViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BCA0642A2B60334400BDFE68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCA0642D2B60334400BDFE68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BCA0642F2B60334400BDFE68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BCA064352B60356400BDFE68 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				BCA0642A2B60334400BDFE68 /* Assets.xcassets */,
 				BCA0642C2B60334400BDFE68 /* LaunchScreen.storyboard */,
 				BCA0642F2B60334400BDFE68 /* Info.plist */,
+				BCA064352B60356400BDFE68 /* UploadViewController.swift */,
 			);
 			path = ImageApp;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCA064262B60334100BDFE68 /* ViewController.swift in Sources */,
+				BCA064362B60356400BDFE68 /* UploadViewController.swift in Sources */,
 				BCA064222B60334100BDFE68 /* AppDelegate.swift in Sources */,
 				BCA064242B60334100BDFE68 /* SceneDelegate.swift in Sources */,
 			);
