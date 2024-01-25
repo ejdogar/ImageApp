@@ -54,7 +54,6 @@ class ImageGalleryViewController: UIViewController {
         func displayImages(_ base64Images: [String]) {
             for (index, base64Image) in base64Images.enumerated() {
                 if let imageData = Data(base64Encoded: base64Image), let image = UIImage(data: imageData) {
-                    // Create UIImageView for each image
                     let imageView = UIImageView(image: image)
                     imageView.contentMode = .scaleAspectFit
 
