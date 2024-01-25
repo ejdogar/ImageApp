@@ -7,12 +7,15 @@
 
 import UIKit
 import Foundation
+import CryptoKit
 
 class UploadViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     
     let imagePicker = UIImagePickerController()
+    var selectedPic = UIImage()
+    var selectionCheck = 0
     
     @IBAction func selectImageBtn(_ sender: UIButton) {
         imagePicker.allowsEditing = false
@@ -20,77 +23,69 @@ class UploadViewController: UIViewController,UIImagePickerControllerDelegate, UI
         present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func uploadBtnPressed(_ sender: Any) {
-        let imageURL = URL(string: "http://localhost:3000/imageUpload")!
-        
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else {
-            print("Error faced while converting JSON to data")
-            return
-        }
-        
-        var request = URLRequest(url: imageURL)
-        request.httpMethod = "POST"
-        request.httpBody = jsonData
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let ses = URLSession.shared
-        
-        request.httpMethod="POST"
-        
-        request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        
-        request.setValue("File Name", forHTTPHeaderField: "X-FileName")
-        
-        let jpgData = (image.image!).jpegData(compressionQuality: 1.0)
-        
-        
-        request.httpBodyStream = InputStream(data: jpgData!)
-        let task = ses.uploadTask(withStreamedRequest: request as URLRequest) // files[0]
-        task.resume()
-
-   
-        }
-    
-        let image = UIImage(named: "your_image_name")!
-        uploadImage(image: image.image!) { result in
-            switch result {
-            case .success(let fileNames):
-                print("Image uploaded successfully. File names: \(fileNames)")
-            case .failure(let error):
-                print("Error uploading image: \(error.localizedDescription)")
-            }
-        }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-
     }
     
-    
-    // MARK: - UIImagePickerControllerDelegate Methods
+    @IBAction func uploadBtnPressed(_ sender: Any) {
+        if (selectionCheck == 1){
+            uploadImage(image: selectedPic)
+            selectionCheck = 0
+        }
+    }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            image.contentMode = .scaleAspectFit
-            image.image = pickedImage
-        }
-
         dismiss(animated: true, completion: nil)
+
+        if let selectedImage = info[.originalImage] as? UIImage {
+            imageView.image = selectedImage
+            selectedPic = selectedImage
+            selectionCheck = 1
+        }
     }
     
+    func uploadImage(image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Error: Unable to convert image to data.")
+            return
+        }
+
+        let url = URL(string: "http://localhost:3000/upload")!
+        var request = URLRequest(url: url)
+         request.httpMethod = "POST"
+
+         let boundary = "Boundary-\(UUID().uuidString)"
+         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+         var body = Data()
+
+         body.append("--\(boundary)\r\n".data(using: .utf8)!)
+         body.append("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+         body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+         body.append(imageData)
+         body.append("\r\n".data(using: .utf8)!)
+
+         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+
+         request.httpBody = body
+
+         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+             if let error = error {
+                 print("Error: \(error)")
+             } else if let data = data {
+                 let responseString = String(data: data, encoding: .utf8)
+                 print("Response: \(responseString ?? "")")
+             }
+         }
+
+         task.resume()
+    }
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+    
+    
+
