@@ -1,137 +1,31 @@
 const express = require("express");
-<<<<<<< HEAD
 const multer = require("multer");
-const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const port = 3000;
-const uploadDir = "./uploads";
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
-    }
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.use(express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
 
 app.post("/upload", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send("no file uploaded!!");
-  }
+  const imageTitle = "test" || "default";
+  const encryptedImage = req.file.buffer;
 
-  const imagePath = path.join(__dirname, "uploads", req.file.filename);
-  res.send("Image uploaded and saved at: ${imagePath}");
+  const path = fs.writeFileSync(`uploads/${imageTitle}.enc`, encryptedImage);
+
+  res.send("image uploaded and saved");
 });
 
 app.get("/images", (req, res) => {
-  fs.readdir(uploadDir, (err, files) => {
-    if (err) {
-      return res
-        .status(500)
-        .send("Error occured while finding image directory => ${err}");
-    }
+  const imageTitle = req.header("image-title") || "default";
 
-    if (files.length === 0) {
-      return res.status(404).send("No images found!!");
-    }
+  const encryptedImage = fs.readFileSync("uploads/test.enc");
 
-    const imageFiles = files.filter((file) =>
-      /\.(jpg|jpeg|png|gif)$/i.test(file)
-    );
-
-    if (imageFiles.length === 0) {
-      console.warn("no vlid files in the directory");
-      return res.status(404).send("no valid image files in the directory");
-    }
-
-    const imagePromises = imageFiles.map((file) => {
-      const filePath = path.join(uploadDir, file);
-      return fs.promises.readFile(filePath);
-    });
-
-    Promise.all(imagePromises)
-      .then((images) => {
-        const base64Images = images.map((image) => image.toString("base64"));
-        res.json(base64Images);
-      })
-      .catch((err) => {
-        res.status(500).send("error occured while reading images ==> ${err}");
-      });
-  });
-=======
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const _ = require("lodash");
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-
-var multipleUploads = multer({ storage: storage }).array("pictureUpload", 10);
-
-const app = express();
-
-app.set("view engine", "ejs");
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(express.static("images"));
-
-
-app.post("/imageUpload", function (req, res) {
-  const fileNames = [];
-  multipleUploads(req, res, function (err) {
-    //console.log(req.body);
-    console.log(req.files);
-      const picturesArray = req.files;
-
-    picturesArray.forEach((picture) => {
-      fileNames.push(picture.originalname);
-    });
-
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    console.log(fileNames);
-
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(fileNames));
-  });
-
+  res.send(encryptedImage);
 });
 
-
-
-app.post("/upload", (req, res) => {
-
-  const { image } = req.files;
-
-  if (!image) return res.sendStatus(400);
-
-  image.mv(__dirname + "/uploadnew/" + image.name);
-
-  res.sendStatus(200);
->>>>>>> 82ff969f286a05ae43621c985713ea429436618e
-});
-
-app.listen(3000, function () {
-  console.log("App is active on port 3000...");
+app.listen(3000, () => {
+  console.log("App is running on port 3000...");
 });

@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BC5A4FDF2B628CF1008EBFBC /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5A4FDE2B628CF1008EBFBC /* CryptoKit.framework */; };
-		BC5A4FE12B6296B4008EBFBC /* ImageGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A4FE02B6296B4008EBFBC /* ImageGalleryViewController.swift */; };
+		BC5A4FEA2B637E83008EBFBC /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A4FE92B637E83008EBFBC /* DisplayViewController.swift */; };
+		BC5A4FEC2B63C1FD008EBFBC /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5A4FEB2B63C1FD008EBFBC /* Crypto.swift */; };
 		BCA064222B60334100BDFE68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA064212B60334100BDFE68 /* AppDelegate.swift */; };
 		BCA064242B60334100BDFE68 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA064232B60334100BDFE68 /* SceneDelegate.swift */; };
 		BCA064262B60334100BDFE68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA064252B60334100BDFE68 /* ViewController.swift */; };
@@ -20,7 +21,8 @@
 
 /* Begin PBXFileReference section */
 		BC5A4FDE2B628CF1008EBFBC /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
-		BC5A4FE02B6296B4008EBFBC /* ImageGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryViewController.swift; sourceTree = "<group>"; };
+		BC5A4FE92B637E83008EBFBC /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
+		BC5A4FEB2B63C1FD008EBFBC /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		BCA0641E2B60334100BDFE68 /* ImageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA064212B60334100BDFE68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCA064232B60334100BDFE68 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,11 +78,12 @@
 				BCA064232B60334100BDFE68 /* SceneDelegate.swift */,
 				BCA064252B60334100BDFE68 /* ViewController.swift */,
 				BCA064272B60334100BDFE68 /* Main.storyboard */,
-				BC5A4FE02B6296B4008EBFBC /* ImageGalleryViewController.swift */,
 				BCA0642A2B60334400BDFE68 /* Assets.xcassets */,
 				BCA0642C2B60334400BDFE68 /* LaunchScreen.storyboard */,
 				BCA0642F2B60334400BDFE68 /* Info.plist */,
 				BCA064352B60356400BDFE68 /* UploadViewController.swift */,
+				BC5A4FE92B637E83008EBFBC /* DisplayViewController.swift */,
+				BC5A4FEB2B63C1FD008EBFBC /* Crypto.swift */,
 			);
 			path = ImageApp;
 			sourceTree = "<group>";
@@ -156,9 +159,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC5A4FEC2B63C1FD008EBFBC /* Crypto.swift in Sources */,
+				BC5A4FEA2B637E83008EBFBC /* DisplayViewController.swift in Sources */,
 				BCA064262B60334100BDFE68 /* ViewController.swift in Sources */,
 				BCA064362B60356400BDFE68 /* UploadViewController.swift in Sources */,
-				BC5A4FE12B6296B4008EBFBC /* ImageGalleryViewController.swift in Sources */,
 				BCA064222B60334100BDFE68 /* AppDelegate.swift in Sources */,
 				BCA064242B60334100BDFE68 /* SceneDelegate.swift in Sources */,
 			);
